@@ -1,0 +1,116 @@
+ body {
+     font-family: 'Poppins', sans-serif;
+     background: linear-gradient(135deg, #f4f8f4 0%, #f9fafb 100%);
+     line-height: 1.6;
+     min-height: 100vh;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     padding-top: 80px;
+ }
+
+ header {
+     position: fixed;
+     top: 0;
+     left: 0;
+     right: 0;
+     padding: 24px 32px;
+     z-index: 1000;
+     background-color: #ffffff;
+ }
+
+ .nav-link:hover,
+ .nav-link:focus {
+     color: #0b3d91 !important;
+     text-decoration: underline;
+ }
+
+ nav .nav-link {
+     font-weight: 600;
+     transition: color 0.3s ease;
+ }
+
+ .navbar-brand {
+     font-family: 'Poppins', sans-serif;
+     font-weight: 700;
+     font-size: 1.5rem;
+     margin-right: 20px;
+ }
+
+ header h1 {
+     font-weight: 700;
+     font-size: 1.8rem;
+     max-width: 800px;
+     margin: 0 auto;
+     text-align: center;
+     letter-spacing: 1.2px;
+     user-select: none;
+ }
+
+ h1 {
+     text-align: center;
+     font-weight: 700;
+     color: #b30000;
+ }
+
+ main {
+     flex-grow: 1;
+     max-width: 1200px;
+     margin: 32px auto;
+     padding: 0 24px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+ }
+
+ footer {
+     color: #b30000;
+     padding: 16px 32px;
+     text-align: center;
+     font-size: 0.9rem;
+     user-select: none;
+     border-top: 1px solid #1d4ed8;
+ }
+ .footer {
+    background-color: #f0f0f0; /* Light gray background */
+    padding: 20px; /* Space around content */
+    text-align: left; /* Align text to the left */
+}
+
+.footer-content {
+    display: flex; /* Arrange sections horizontally */
+    justify-content: space-between; /* Space between sections */
+}
+
+.footer-section {
+    width: 30%; /* Width of each section */
+}
+
+.footer h2,
+.footer h3 {
+    margin: 0; 
+    color: #333; 
+}
+
+.footer p {
+    margin: 10px 0; /* Space above and below paragraphs */
+    color: #555; /* Medium gray color for text */
+}
+
+.footer ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+}
+
+.footer ul li {
+    margin: 5px 0; /* Space between list items */
+}
+
+.footer a {
+    text-decoration: none; /* Remove underline from links */
+    color: #007BFF; /* Blue color for links */
+}
+
+.footer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}

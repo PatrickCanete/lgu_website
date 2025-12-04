@@ -1,0 +1,186 @@
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f0f4f8;
+  color: #1c1c1c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  padding: 50px 20px;
+}
+
+.footer {
+  background-color: #e8e8e8;
+  padding: 40px 0;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-section h3 {
+  color: #999;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.footer-section p {
+  margin-bottom: 10px;
+  color: #888;
+}
+
+.footer-section ul {
+  list-style: none;
+}
+
+.footer-section ul li {
+  margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+  color: #888;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #666;
+  text-decoration: underline;
+}
+
+.logo-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  background-color: #ccc;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #888;
+}
+
+.logo-content {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .logo-section {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+h2,
+h3 {
+  color: #b30000;
+}
+
+nav .nav-link {
+  color: #0b3d91;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.map-container {
+  margin-top: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(11, 61, 145, 0.15);
+}
+
+iframe {
+  width: 100%;
+  height: 400px;
+  border: 0;
+}
+
+.footer {
+  background-color: #f0f0f0;
+  /* Light gray background */
+  padding: 20px;
+  /* Space around content */
+  text-align: left;
+  /* Align text to the left */
+}
+
+.footer-content {
+  display: flex;
+  /* Arrange sections horizontally */
+  justify-content: space-between;
+  /* Space between sections */
+}
+
+.footer-section {
+  width: 30%;
+  /* Width of each section */
+}
+
+.footer h2,
+.footer h3 {
+  margin: 0;
+  /* Remove default margin */
+  color: #333;
+  /* Dark gray color for headings */
+}
+
+.footer p {
+  margin: 10px 0;
+  /* Space above and below paragraphs */
+  color: #555;
+  /* Medium gray color for text */
+}
+
+.footer ul {
+  list-style: none;
+  /* Remove bullet points */
+  padding: 0;
+  /* Remove default padding */
+}
+
+.footer ul li {
+  margin: 5px 0;
+  /* Space between list items */
+}
+
+.footer a {
+  text-decoration: none;
+  /* Remove underline from links */
+  color: #007BFF;
+  /* Blue color for links */
+}
+
+.footer a:hover {
+  text-decoration: underline;
+  /* Underline on hover */
+}

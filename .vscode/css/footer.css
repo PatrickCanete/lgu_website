@@ -1,0 +1,43 @@
+.footer {
+    background-color: #f0f0f0; /* Light gray background */
+    padding: 20px; /* Space around content */
+    text-align: left; /* Align text to the left */
+}
+
+.footer-content {
+    display: flex; /* Arrange sections horizontally */
+    justify-content: space-between; /* Space between sections */
+}
+
+.footer-section {
+    width: 30%; /* Width of each section */
+}
+
+.footer h2,
+.footer h3 {
+    margin: 0; /* Remove default margin */
+    color: #333; /* Dark gray color for headings */
+}
+
+.footer p {
+    margin: 10px 0; /* Space above and below paragraphs */
+    color: #555; /* Medium gray color for text */
+}
+
+.footer ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+}
+
+.footer ul li {
+    margin: 5px 0; /* Space between list items */
+}
+
+.footer a {
+    text-decoration: none; /* Remove underline from links */
+    color: #007BFF; /* Blue color for links */
+}
+
+.footer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}

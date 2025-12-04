@@ -1,0 +1,109 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f4f8;
+    color: #1c1c1c;
+    padding-top: 70px;
+}
+
+.navbar {
+    justify-content: flex-start;
+}
+
+.navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-right: 20px;
+}
+
+.nav-link {
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 20px;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    color: #b30000 !important;
+    text-decoration: underline;
+}
+
+h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #b30000;
+}
+
+h2 {
+    font-weight: 800;
+    font-size: 2rem;
+}
+
+h3 {
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.card {
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 14px rgba(11, 61, 145, 0.12);
+    margin: 0 auto;
+   
+}
+
+footer {
+    color: #b30000;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    padding: 1rem 2rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+}
+.footer {
+    background-color: #f0f0f0; /* Light gray background */
+    padding: 20px; /* Space around content */
+    text-align: left; /* Align text to the left */
+}
+
+.footer-content {
+    display: flex; /* Arrange sections horizontally */
+    justify-content: space-between; /* Space between sections */
+}
+
+.footer-section {
+    width: 30%; /* Width of each section */
+}
+
+.footer h2,
+.footer h3 {
+    margin: 0; /* Remove default margin */
+    color: #333; /* Dark gray color for headings */
+}
+
+.footer p {
+    margin: 10px 0; /* Space above and below paragraphs */
+    color: #555; /* Medium gray color for text */
+}
+
+.footer ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+}
+
+.footer ul li {
+    margin: 5px 0; /* Space between list items */
+}
+
+.footer a {
+    text-decoration: none; /* Remove underline from links */
+    color: #007BFF; /* Blue color for links */
+}
+
+.footer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}

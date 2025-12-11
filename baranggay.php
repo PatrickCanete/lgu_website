@@ -1,3 +1,7 @@
+
+<?php
+include 'g-6.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +11,7 @@
     <title>Barangays</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600;700;800&display=swap"rel="stylesheet" />
-    <link href=".vscode\css\barangay.css" rel="stylesheet" />
+    <link href="css\css\barangay.css" rel="stylesheet" />
 
 </head>
 <style>

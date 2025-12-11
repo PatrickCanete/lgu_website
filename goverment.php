@@ -1,3 +1,7 @@
+
+<?php
+include 'g-6.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +11,7 @@
     <title>Government of Unisan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link href="css\government.css" rel="stylesheet" />
     <style>
         :root {
             --primary-red: #dc2626;
@@ -459,7 +464,7 @@
                 <h2>Government of Unisan</h2>
                 <p>The local government of Unisan is dedicated to serving its residents through various programs and initiatives. Our leadership is committed to transparency, accountability, and community engagement.</p>
                 
-                <h3 id="officials">🏛️ Current Officials</h3>
+                <h3 id="officials">Current Officials</h3>
                 <div class="officials-grid">
                     <div class="official-card">
                         <div class="official-title">Mayor</div>
@@ -471,7 +476,7 @@
                     </div>
                 </div>
                 
-                <h3>👥 Sangguniang Bayan Members</h3>
+                <h3>Sangguniang Bayan Members</h3>
                 <div class="officials-grid">
                     <div class="official-card">
                         <div class="official-name">KEBOY MAGNAYE</div>
@@ -496,31 +501,6 @@
                     </div>
                 </div>
 
-                <div class="vision-mission">
-                    <h3>🎯 Vision</h3>
-                    <p>
-                        To provide a safe, healthy, and prosperous environment for all residents by delivering effective and efficient public services, promoting sustainable development, and fostering community participation.
-                    </p>
-                </div>
-
-                <div class="vision-mission">
-                    <h3>🚀 Mission</h3>
-                    <p>
-                        Unisan, Quezon will be a thriving, resilient, and inclusive community recognized for its vibrant agricultural sector, strong community bonds, and commitment to environmental sustainability.
-                    </p>
-                </div>
-
-                <div class="core-values">
-                    <h3>💎 Core Values</h3>
-                    <p>
-                        <strong>Integrity:</strong> Upholding honesty, transparency, and accountability in all government operations.<br><br>
-                        <strong>Service:</strong> Prioritizing the needs of the citizens and delivering responsive and efficient public services.<br><br>
-                        <strong>Community:</strong> Fostering collaboration, inclusivity, and a sense of belonging among residents.<br><br>
-                        <strong>Sustainability:</strong> Promoting responsible resource management and environmental protection for future generations.<br><br>
-                        <strong>Progress:</strong> Encouraging innovation, economic growth, and continuous improvement for residents.
-                    </p>
-                </div>
-
                 <div class="programs">
                     <h3 id="programs">📋 Programs and Initiatives</h3>
                     <ul>
@@ -535,7 +515,7 @@
                 </div>
 
                 <div class="events">
-                    <h3>🎉 Upcoming Events</h3>
+                    <h3>Upoming Events</h3>
                     <p>Join us for our upcoming community events aimed at fostering unity and participation:</p>
                     <ul>
                         <li><strong>Annual Town Fiesta</strong> - June 29, 2025</li>

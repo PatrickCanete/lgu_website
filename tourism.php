@@ -1,273 +1,14 @@
-<!DOCTYPE html>
+
+<?php
+include 'g-6.php';
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css\tourism.css" rel="stylesheet" />
     <title>Paradise Destinations - Discover Your Next Adventure</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #fff5f5 0%, #ffeaea 100%);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-       
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(220, 38, 38, 0.8), rgba(153, 27, 27, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f87171" width="1200" height="600"/><circle fill="%23dc2626" cx="200" cy="150" r="100" opacity="0.3"/><circle fill="%23991b1b" cx="800" cy="400" r="150" opacity="0.2"/><polygon fill="%23b91c1c" points="0,600 400,300 800,500 1200,200 1200,600" opacity="0.4"/></svg>');
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .hero-content p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #fbbf24, #f59e0b);
-            color: white;
-            padding: 1rem 2.5rem;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
-            animation: fadeInUp 1s ease-out 0.6s both;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.6);
-        }
-
-        /* Section Styles */
-        .section {
-            padding: 5rem 0;
-            margin-top: 80px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #dc2626;
-            text-shadow: 1px 1px 2px rgba(220, 38, 38, 0.2);
-        }
-
-        .grid {
-            display: grid;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .grid-3 {
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        }
-
-        .grid-4 {
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        }
-
-        /* Card Styles */
-        .card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.15);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.25);
-        }
-
-        .card-image {
-            height: 200px;
-            background: linear-gradient(45deg, #dc2626, #f87171);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle fill="rgba(255,255,255,0.1)" cx="20" cy="20" r="10"/><circle fill="rgba(255,255,255,0.1)" cx="80" cy="60" r="15"/><circle fill="rgba(255,255,255,0.1)" cx="50" cy="80" r="8"/></svg>');
-        }
-
-        .card-content {
-            padding: 1.5rem;
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #dc2626;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-description {
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .card-price {
-            background: linear-gradient(45deg, #dc2626, #991b1b);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-
-        /* Attractions Section */
-        .attractions {
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-        }
-
-        /* Resorts Section */
-        .resorts {
-            background: linear-gradient(135deg, #fff1f2 0%, #fce7e8 100%);
-        }
-
-        /* Beaches Section */
-        .beaches {
-            background: linear-gradient(135deg, #fef7ff 0%, #fce7f3 100%);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
-            color: white;
-            text-align: center;
-            padding: 3rem 0;
-            margin-top: 3rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #fca5a5;
-        }
-
-        .footer-section p, .footer-section a {
-            color: #fed7d7;
-            text-decoration: none;
-            line-height: 1.8;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-content p {
-                font-size: 1.1rem;
-            }
-            
-           
-            
-            .grid-3, .grid-4 {
-                grid-template-columns: 1fr;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-
-        /* Scroll animations */
-        .card {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    
 </head>
 <body>
      <?php
@@ -286,7 +27,7 @@
 
     <section id="attractions" class="section attractions">
         <div class="container">
-            <h2 class="section-title">🏛️ Top Attractions</h2>
+            <h2 class="section-title">Top Attractions</h2>
             <div class="grid grid-3">
                 <div class="card">
                     <div class="card-image">🏰</div>
@@ -341,7 +82,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Sunset Beach Resort</h3>
                         <p class="card-description">Oceanfront luxury with private beaches, spa services, and world-class dining.</p>
-                        <span class="card-price">$299/night</span>
+                       
                     </div>
                 </div>
                 <div class="card">
@@ -349,7 +90,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Mountain View Lodge</h3>
                         <p class="card-description">Scenic mountain retreat with hiking trails, cozy cabins, and breathtaking vistas.</p>
-                        <span class="card-price">$189/night</span>
+                       
                     </div>
                 </div>
                 <div class="card">
@@ -357,7 +98,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Tropical Paradise Hotel</h3>
                         <p class="card-description">All-inclusive tropical experience with pools, gardens, and exotic cuisine.</p>
-                        <span class="card-price">$249/night</span>
+                        
                     </div>
                 </div>
                 <div class="card">
@@ -365,7 +106,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Royal Palace Resort</h3>
                         <p class="card-description">Luxurious accommodations in a palace setting with royal service and amenities.</p>
-                        <span class="card-price">$459/night</span>
+                       
                     </div>
                 </div>
                 <div class="card">
@@ -373,7 +114,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Forest Retreat Spa</h3>
                         <p class="card-description">Wellness-focused resort surrounded by pristine forests with spa treatments.</p>
-                        <span class="card-price">$329/night</span>
+                       
                     </div>
                 </div>
                 <div class="card">
@@ -389,7 +130,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Heritage Boutique Hotel</h3>
                         <p class="card-description">Historic charm meets modern luxury in this beautifully restored heritage property.</p>
-                        <span class="card-price">$219/night</span>
+                        
                     </div>
                 </div>
                 <div class="card">
@@ -397,7 +138,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Sunrise Cliff Resort</h3>
                         <p class="card-description">Dramatic clifftop location with infinity pools and spectacular sunrise views.</p>
-                        <span class="card-price">$389/night</span>
+                        
                     </div>
                 </div>
             </div>
@@ -421,7 +162,7 @@
                     <div class="card-content">
                         <h3 class="card-title">Crystal Cove Beach</h3>
                         <p class="card-description">Hidden gem with crystal-clear waters, perfect for snorkeling and discovering marine life.</p>
-                        <span class="card-price">$10 Parking</span>
+                       
                     </div>
                 </div>
                 <div class="card">

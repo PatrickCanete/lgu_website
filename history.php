@@ -1,3 +1,6 @@
+<?php
+include 'g-6.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,112 +10,9 @@
     <title>History</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link href=".vscode/css/history.css" rel="stylesheet" />
+    <link href="css/history.css" rel="stylesheet" />
 
 </head>
-<style>
-    .nav-link:hover,
-    .nav-link:focus {
-    color: #0b3d91 !important;
-    text-decoration: underline;
-}
-* {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            padding: 50px 20px;
-        }
-        
-        .footer {
-            background-color: #e8e8e8;
-            padding: 40px 0;
-            color: #666;
-            font-size: 13px;
-            line-height: 1.6;
-        }
-        
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 40px;
-        }
-        
-        .footer-section h3 {
-            color: #999;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-        
-        .footer-section p {
-            margin-bottom: 10px;
-            color: #888;
-        }
-        
-        .footer-section ul {
-            list-style: none;
-        }
-        
-        .footer-section ul li {
-            margin-bottom: 8px;
-        }
-        
-        .footer-section ul li a {
-            color: #888;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-section ul li a:hover {
-            color: #666;
-            text-decoration: underline;
-        }
-        
-        .logo-section {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-        }
-        
-        .logo {
-            width: 60px;
-            height: 60px;
-            background-color: #ccc;
-            border-radius: 50%;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #888;
-        }
-        
-        .logo-content {
-            flex: 1;
-        }
-        
-        @media (max-width: 768px) {
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .logo-section {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-</style>
 
 <body>
     <?php

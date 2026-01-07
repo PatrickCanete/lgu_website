@@ -1,93 +1,156 @@
 <?php
-include 'g-6.php';
+include 'g-6.php'; // database connection
+
+// Fetch main history image
+$main_image_query = "SELECT * FROM history_main_image WHERE id = 1";
+$main_image_result = mysqli_query($conn, $main_image_query);
+$main_image = mysqli_fetch_assoc($main_image_result);
+
+// Fetch all history events ordered by display_order
+$events_query = "SELECT * FROM history_events ORDER BY display_order ASC";
+$events_result = mysqli_query($conn, $events_query);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>History</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link href="css/history.css" rel="stylesheet" />
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>History of Unisan</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+    padding-top: 80px;
+}
+main {
+    max-width: 1000px;
+    margin: 0 auto 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #b83232;
+}
+.timeline {
+    position: relative;
+    padding: 20px 0;
+}
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 100%;
+    background-color: #b83232;
+}
+.timeline-event {
+    position: relative;
+    width: 50%;
+    padding: 20px 40px;
+    box-sizing: border-box;
+}
+.timeline-event-left {
+    left: 0;
+    text-align: right;
+}
+.timeline-event-right {
+    left: 50%;
+}
+.timeline-event::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #b83232;
+    border: 4px solid #fff;
+    z-index: 1;
+}
+.timeline-event-left::before {
+    right: -12px;
+}
+.timeline-event-right::before {
+    left: -12px;
+}
+.timeline-event h3 {
+    margin-bottom: 10px;
+    color: #b83232;
+}
+.timeline-event p {
+    margin: 0;
+    text-align: justify;
+}
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 8px;
+    }
+    .timeline-event {
+        width: 100%;
+        padding-left: 30px;
+        padding-right: 15px;
+        margin-bottom: 20px;
+    }
+    .timeline-event-left,
+    .timeline-event-right {
+        left: 0;
+        text-align: left;
+    }
+    .timeline-event::before {
+        left: 0;
+        top: 0;
+    }
+}
+.history-image {
+    display: block;
+    margin: 0 auto 30px auto;
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+</style>
 </head>
 
 <body>
-    <?php
-        include 'header.php';
-    ?>
-    <main>
-        <h1>History of Unisan</h1>
-        <div style="flex-shrink: 0; display: flex; justify-content: center; margin-bottom: 20px;">
-            <img src="https://live.staticflickr.com/1313/5160898699_55d5ed7fac_b.jpg" alt="Unisan View"
-                style="width: 450px; height: auto; border-radius: 8px;">
-        </div>
-        <div style="max-width: 1200px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">
-            <p>
-                Kalilayan was the first name of this municipality. 
-                As early as 1591, more than 4 centuries ago, the town of Kalilayan was founded by the first Malayan settlers. 
-                The name Kalilayan derived from the Tagalog term, a rootword ‘’Lilay’’ a kind of palm similar to buri with the smaller leaves in the size of anahaw leaves that grow once in abundance. 
-                During the latter part of the 19th century, traditions said that the real founder of the town, was a woman called of Ladya. She was a Malayan lady of nobility. Hence her title was (called) ‘’QUEEN of Kalilayan’’. It is believed that such founding occurred in the Middle Ages when immigration of the Malayans to this country was still predominant.
-                That was before the advent of Mohamedanism in the East Indies. This proven by the fact that no traces of Mohamed’s Creed were found in that part of the Philippines when the Europeans landed in our Islands.
-            </p>
+<?php include 'header.php'; ?>
 
-            <p>
-                Unisan, Quezon could be the oldest town in the Philippines.
-                 The people of Unisan claimed that their town is now 481 years old, having been established in 1521, the same year that Ferdinand Magellan first landed in the Philippines. 
-                 All other towns in the country were established not earlier than 1565, when Spain formally occupied the Philippines as a colony. A Malayan queen named Ladya reportedly founded Calilayan, the old name of the town. In 1876, Calilayan was renamed Unisan which was derived from the Latin word uni-sancti, meaning "holy saint".
-            </p>
+<main>
+    <h1>History of Unisan</h1>
 
-            <p>
-                According to records, the name of Unisan was derived from a Spanish verb "UNIR" meaning, UNITE.
-                At that time inhabitants, which were composed of strangers from different parts of the Island, were united.
-                They wanted to call the town Unisan from the Tagalog word in place of UNION, or UNIDOS and for the sake of euphony they call the town UNISAN. 
-                There was another version which related that the name was derived from the Latin words UNI-SANCTI, one saint or saint in honor of a saint. Friar Pedro Bautista, once a missionary to Unisan when this town was still CALILAYAN and later canonized saint following his martyrdom while a missionary in Japan. 
-                This is more probable considering that there was a historical fact to support the version Uni-Sancti was made Unisan for short and to suit the Visayan and Caviteño tongues. Calilayan then regained its status as full-pledge pueblo under the new UNISAN. The people being united in their ideals struggled for the improvement of their new municipality.
-            </p>
-        </div>
-    </main>
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <div class="logo-section">
-                    <div class="logo">RP</div>
-                    <div class="logo-content">
-                        <h3>Republic of the Philippines</h3>
-                        <p>All content is in the public domain unless otherwise stated.</p>
-                        <p><a href="#privacy">Privacy Policy</a></p>
-                    </div>
+    <?php if ($main_image && file_exists($main_image['image_path'])): ?>
+        <img src="<?php echo $main_image['image_path']; ?>" alt="<?php echo htmlspecialchars($main_image['alt_text']); ?>" class="history-image">
+    <?php endif; ?>
+
+    <div class="timeline">
+        <?php if(mysqli_num_rows($events_result) > 0): ?>
+            <?php while($event = mysqli_fetch_assoc($events_result)): ?>
+                <div class="timeline-event <?php echo $event['position'] == 'left' ? 'timeline-event-left' : 'timeline-event-right'; ?>">
+                    <h3><?php echo htmlspecialchars($event['year']) . ' - ' . htmlspecialchars($event['title']); ?></h3>
+                    <p><?php echo nl2br(htmlspecialchars($event['description'])); ?></p>
+                    <?php if($event['image_path'] && file_exists($event['image_path'])): ?>
+                        <img src="<?php echo $event['image_path']; ?>" alt="<?php echo htmlspecialchars($event['title']); ?>" class="history-image">
+                    <?php endif; ?>
                 </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>About GovPH</h3>
-                <p>Learn more about the Philippine government, its structure, how government works and the people behind it.</p>
-                <ul>
-                    <li><a href="#gazette">Official Gazette</a></li>
-                    <li><a href="#opendata">Open Data Portal</a></li>
-                    <li><a href="#feedback">Send us your feedback</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Government Links</h3>
-                <ul>
-                    <li><a href="#president">Office of the President</a></li>
-                    <li><a href="#vp">Office of the Vice President</a></li>
-                    <li><a href="#senate">Senate of the Philippines</a></li>
-                    <li><a href="#house">House of Representatives</a></li>
-                    <li><a href="#supreme">Supreme Court</a></li>
-                    <li><a href="#appeals">Court of Appeals</a></li>
-                    <li><a href="#sandiganbayan">Sandiganbayan</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-    
+            <?php endwhile; ?>
+        <?php else: ?>
+            <p class="text-center text-muted">No history events available yet.</p>
+        <?php endif; ?>
+    </div>
+</main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<?php include 'footer.php'; ?>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

@@ -12,17 +12,7 @@ include 'g-6.php';
 </head>
 <body>
 
-<header>
-    <div class="header-image">
-        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/899608a1-1282-4e21-8c71-f8c9de818385.png" alt="Beautiful panoramic view of the tourist attraction">
-    </div>
-    <h1>Welcome to the Amazing Tourist Attraction</h1>
-    <nav>
-        <a href="#about">About</a>
-        <a href="#attractions">Attractions</a>
-        <a href="#contact">Contact</a>
-    </nav>
-</header>
+<?php include 'header.php'; ?>
 
 <div class="content">
     <section id="about">
@@ -83,20 +73,10 @@ include 'g-6.php';
                 </ul>
             </div>
             
-            <div class="footer-section">
-                <h3>Government Links</h3>
-                <ul>
-                    <li><a href="#president">Office of the President</a></li>
-                    <li><a href="#vp">Office of the Vice President</a></li>
-                    <li><a href="#senate">Senate of the Philippines</a></li>
-                    <li><a href="#house">House of Representatives</a></li>
-                    <li><a href="#supreme">Supreme Court</a></li>
-                    <li><a href="#appeals">Court of Appeals</a></li>
-                    <li><a href="#sandiganbayan">Sandiganbayan</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+             <?php
+        include 'footer.php';
+    ?>
+
 
 </body>
 </html>

@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 echo "<h2>🔍 Login Debug Tool</h2>";
 echo "<hr>";
 
-// Step 1: Check if config.php exists
+
 echo "<h3>Step 1: Checking config.php</h3>";
 if (file_exists('config.php')) {
     echo "✅ config.php EXISTS<br>";
@@ -16,7 +16,7 @@ if (file_exists('config.php')) {
     exit();
 }
 
-// Step 2: Test database connection
+
 echo "<h3>Step 2: Testing Database Connection</h3>";
 $host = 'localhost';
 $user = 'root';
@@ -32,7 +32,7 @@ if ($conn->connect_error) {
     echo "✅ Database connected successfully<br>";
 }
 
-// Step 3: Check if admin_users table exists
+ 
 echo "<h3>Step 3: Checking admin_users table</h3>";
 $result = $conn->query("SHOW TABLES LIKE 'admin_users'");
 if ($result->num_rows == 0) {
@@ -43,7 +43,7 @@ if ($result->num_rows == 0) {
     echo "✅ Table 'admin_users' exists<br>";
 }
 
-// Step 4: Check for admin user
+//  Check for admin user
 echo "<h3>Step 4: Checking for admin user</h3>";
 $query = "SELECT * FROM admin_users WHERE username = 'admin'";
 $result = $conn->query($query);

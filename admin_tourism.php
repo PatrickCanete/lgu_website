@@ -8,24 +8,17 @@ $message_type = '';
 // Ensure uploads folder exists
 $upload_dir = 'uploads/tourism/';
 if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
-$contact_unread = $conn->query(
-    "SELECT COUNT(*) AS total FROM contact_us WHERE status='unread'"
-)->fetch_assoc()['total'];
 
-$submit_unread = $conn->query(
-    "SELECT COUNT(*) AS total FROM submit_request WHERE status='unread'"
-)->fetch_assoc()['total'];
-
+// Get unread counts
+$contact_unread = $conn->query("SELECT COUNT(*) AS total FROM contact_us WHERE status='unread'")->fetch_assoc()['total'];
+$submit_unread = $conn->query("SELECT COUNT(*) AS total FROM submit_request WHERE status='unread'")->fetch_assoc()['total'];
 $unread_count = $contact_unread + $submit_unread;
-
-// Get unread submissions count for sidebar
-$unread_count = $conn->query("SELECT COUNT(*) as total FROM form_submissions WHERE is_read = 0")->fetch_assoc()['total'];
 
 // Handle DELETE
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
     $row = $conn->query("SELECT image_path FROM tourism_attractions WHERE id=$id")->fetch_assoc();
-    if($row && file_exists($row['image_path'])) unlink($row['image_path']);
+    if ($row && file_exists($row['image_path'])) unlink($row['image_path']);
     $conn->query("DELETE FROM tourism_attractions WHERE id=$id");
     header('Location: admin_tourism.php');
     exit();
@@ -47,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = htmlspecialchars($_POST['title']);
     $location = htmlspecialchars($_POST['location']);
     $category = $_POST['category'];
-    $description = htmlspecialchars($_POST['description']);
 
     // Handle image upload
     $image_path = '';
@@ -68,10 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $old = $conn->query("SELECT image_path FROM tourism_attractions WHERE id=$id")->fetch_assoc();
             $image_path = $old['image_path'];
         }
-        $sql = "UPDATE tourism_attractions SET title='$title', location='$location', category='$category', description='$description', image_path='$image_path' WHERE id=$id";
+        $sql = "UPDATE tourism_attractions SET title='$title', location='$location', category='$category', image_path='$image_path' WHERE id=$id";
         $success_msg = 'Tourism attraction updated successfully!';
     } else {
-        $sql = "INSERT INTO tourism_attractions (title, location, category, description, image_path) VALUES ('$title','$location','$category','$description','$image_path')";
+        $sql = "INSERT INTO tourism_attractions (title, location, category, image_path) VALUES ('$title','$location','$category','$image_path')";
         $success_msg = 'Tourism attraction added successfully!';
     }
 
@@ -114,38 +106,33 @@ body {font-family:'Poppins',sans-serif;background: #f4f6f9;}
 .card { border:none; box-shadow:0 5px 15px rgba(0,0,0,0.08); border-radius:10px; }
 .card img { width:100%; height:180px; object-fit:cover; border-radius:10px; margin-bottom:15px; }
 .card-title { font-size:1.1rem; font-weight:600; color:#991b1b; }
-.card-description { font-size:.95rem; color:#555; }
 .featured-badge { background:#dc2626; color:#fff; padding:5px 12px; border-radius:20px; font-size:12px; display:inline-block; margin-bottom:10px; }
 .grid { display:grid; gap:20px; }
 .grid-4 { grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
-.grid-3 { grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
 </style>
 </head>
 <body>
 <div class="container-fluid">
 <div class="row">
-      <!-- Sidebar -->
-        <div class="col-md-2 sidebar p-0">
-            <div class="p-4">
-                <h4 class="mb-4">🏛️ Unisan Admin</h4>
-                <nav class="nav flex-column">
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_dashboard.php'?'active':'' ?>" href="admin_dashboard.php"><i class="fas fa-home"></i> Dashboard</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_events.php'?'active':'' ?>" href="admin_events.php"><i class="fas fa-calendar-alt"></i> Events</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_tourism.php'?'active':'' ?>" href="admin_tourism.php"><i class="fas fa-map-marked-alt"></i> Tourism</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_government.php'?'active':'' ?>" href="admin_government.php"><i class="fas fa-landmark"></i> Government Officials</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_barangay.php'?'active':'' ?>" href="admin_barangay.php"><i class="fas fa-building"></i> Barangays</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_history.php'?'active':'' ?>" href="admin_history.php"><i class="fas fa-history"></i> History</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_submissions.php'?'active':'' ?>" href="admin_submissions.php"><i class="fas fa-envelope"></i> Submissions
-                        <?php if($unread_count>0): ?><span class="badge bg-danger"><?= $unread_count ?></span><?php endif; ?>
-                    </a>
-                    <hr class="my-3" style="border-color: rgba(255,255,255,0.2)">
-                    <a class="nav-link" href="admin_logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                </nav>
-            </div>
+    <!-- Sidebar -->
+    <div class="col-md-2 sidebar p-0">
+        <div class="p-4">
+            <h4 class="mb-4">🏛️ Unisan Admin</h4>
+            <nav class="nav flex-column">
+                <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_dashboard.php'?'active':'' ?>" href="admin_dashboard.php"><i class="fas fa-home"></i> Dashboard</a>
+                <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_events.php'?'active':'' ?>" href="admin_events.php"><i class="fas fa-calendar-alt"></i> Events</a>
+                <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_tourism.php'?'active':'' ?>" href="admin_tourism.php"><i class="fas fa-map-marked-alt"></i> Tourism</a>
+                <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_government.php'?'active':'' ?>" href="admin_government.php"><i class="fas fa-landmark"></i> Government Officials</a>
+                <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_barangay.php'?'active':'' ?>" href="admin_barangay.php"><i class="fas fa-building"></i> Barangays</a>
+                <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_history.php'?'active':'' ?>" href="admin_history.php"><i class="fas fa-history"></i> History</a>
+                <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_submissions.php'?'active':'' ?>" href="admin_submissions.php"><i class="fas fa-envelope"></i> Submissions
+                    <?php if($unread_count>0): ?><span class="badge bg-danger"><?= $unread_count ?></span><?php endif; ?>
+                </a>
+                <hr class="my-3" style="border-color: rgba(255,255,255,0.2)">
+                <a class="nav-link" href="admin_logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </nav>
         </div>
-
-
-
+    </div>
 
     <!-- Main Content -->
     <div class="col-md-10 p-0">
@@ -185,10 +172,6 @@ body {font-family:'Poppins',sans-serif;background: #f4f6f9;}
                                 <option value="Restaurant" <?= $edit_entry && $edit_entry['category']=='Restaurant'?'selected':''; ?>>Restaurant</option>
                                 <option value="Beach & Resort" <?= $edit_entry && $edit_entry['category']=='Beach & Resort'?'selected':''; ?>>Beach & Resort</option>
                             </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" name="description" id="description" rows="3"><?= $edit_entry ? htmlspecialchars($edit_entry['description']) : ''; ?></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Upload Image</label>

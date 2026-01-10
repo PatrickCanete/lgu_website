@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = mysqli_real_escape_string($conn, $_POST['title']);
         $description = mysqli_real_escape_string($conn, $_POST['description']);
         $position = mysqli_real_escape_string($conn, $_POST['position']);
-        $display_order = mysqli_real_escape_string($conn, $_POST['display_order']);
+        $display_order = (int)$_POST['display_order'];
         
         $image_path = NULL;
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
@@ -32,7 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 VALUES ('$year', '$title', '$description', " . ($image_path ? "'$image_path'" : "NULL") . ", '$position', '$display_order')";
         
         if (mysqli_query($conn, $sql)) {
+            $new_id = mysqli_insert_id($conn);
             $success = "Event added successfully!";
+            $show_edit_modal = $new_id; // Flag to show edit modal
         } else {
             $error = "Error: " . mysqli_error($conn);
         }
@@ -40,12 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Update Event
     if (isset($_POST['update_event'])) {
-        $id = mysqli_real_escape_string($conn, $_POST['id']);
+        $id = (int)$_POST['id'];
         $year = mysqli_real_escape_string($conn, $_POST['year']);
         $title = mysqli_real_escape_string($conn, $_POST['title']);
         $description = mysqli_real_escape_string($conn, $_POST['description']);
         $position = mysqli_real_escape_string($conn, $_POST['position']);
-        $display_order = mysqli_real_escape_string($conn, $_POST['display_order']);
+        $display_order = (int)$_POST['display_order'];
         
         $image_update = "";
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
@@ -88,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Delete Event
     if (isset($_POST['delete_event'])) {
-        $id = mysqli_real_escape_string($conn, $_POST['id']);
+        $id = (int)$_POST['id'];
         
         // Delete image file
         $query = "SELECT image_path FROM history_events WHERE id = '$id'";
@@ -108,10 +110,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Update Main Image
     if (isset($_POST['update_main_image'])) {
-        $alt_text = mysqli_real_escape_string($conn, $_POST['alt_text']);
+        $alt_text = isset($_POST['alt_text']) ? mysqli_real_escape_string($conn, $_POST['alt_text']) : '';
         
         if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === 0) {
-            // Delete old image
             $old_query = "SELECT image_path FROM history_main_image WHERE id = 1";
             $old_result = mysqli_query($conn, $old_query);
             $old_data = mysqli_fetch_assoc($old_result);
@@ -125,7 +126,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $target_file = $target_dir . $new_filename;
             
             if (move_uploaded_file($_FILES['main_image']['tmp_name'], $target_file)) {
-                // Check if record exists
                 $check = mysqli_query($conn, "SELECT id FROM history_main_image WHERE id = 1");
                 if (mysqli_num_rows($check) > 0) {
                     $sql = "UPDATE history_main_image SET image_path = '$target_file', alt_text = '$alt_text' WHERE id = 1";
@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Fetch all events
-$events_query = "SELECT * FROM history_events ORDER BY display_order ASC";
+$events_query = "SELECT * FROM history_events ORDER BY display_order ASC, year ASC";
 $events_result = mysqli_query($conn, $events_query);
 
 // Fetch main image
@@ -152,9 +152,9 @@ $main_image_query = "SELECT * FROM history_main_image WHERE id = 1";
 $main_image_result = mysqli_query($conn, $main_image_query);
 $main_image = mysqli_fetch_assoc($main_image_result);
 
-// Get count for dashboard
+// Get count
 $history_count = mysqli_num_rows($events_result);
-mysqli_data_seek($events_result, 0); // Reset pointer
+mysqli_data_seek($events_result, 0);
 ?>
 
 <!DOCTYPE html>
@@ -179,31 +179,38 @@ mysqli_data_seek($events_result, 0); // Reset pointer
         .main-image-preview { max-width: 300px; height: auto; margin-top: 10px; border-radius: 8px; }
         .table-responsive { border-radius: 10px; overflow: hidden; }
         .btn { border-radius: 8px; }
+        .position-preview { 
+            display: inline-block; 
+            padding: 5px 10px; 
+            background: #f8f9fa; 
+            border-radius: 5px; 
+            margin-top: 5px;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
-             <!-- Sidebar -->
-        <div class="col-md-2 sidebar p-0">
-            <div class="p-4">
-                <h4 class="mb-4">🏛️ Unisan Admin</h4>
-                <nav class="nav flex-column">
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_dashboard.php'?'active':'' ?>" href="admin_dashboard.php"><i class="fas fa-home"></i> Dashboard</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_events.php'?'active':'' ?>" href="admin_events.php"><i class="fas fa-calendar-alt"></i> Events</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_tourism.php'?'active':'' ?>" href="admin_tourism.php"><i class="fas fa-map-marked-alt"></i> Tourism</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_government.php'?'active':'' ?>" href="admin_government.php"><i class="fas fa-landmark"></i> Government Officials</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_barangay.php'?'active':'' ?>" href="admin_barangay.php"><i class="fas fa-building"></i> Barangays</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_history.php'?'active':'' ?>" href="admin_history.php"><i class="fas fa-history"></i> History</a>
-                    <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_submissions.php'?'active':'' ?>" href="admin_submissions.php"><i class="fas fa-envelope"></i> Submissions
-                        <?php if($unread_count>0): ?><span class="badge bg-danger"><?= $unread_count ?></span><?php endif; ?>
-                    </a>
-                    <hr class="my-3" style="border-color: rgba(255,255,255,0.2)">
-                    <a class="nav-link" href="admin_logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                </nav>
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar p-0">
+                <div class="p-4">
+                    <h4 class="mb-4">🏛️ Unisan Admin</h4>
+                    <nav class="nav flex-column">
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_dashboard.php'?'active':'' ?>" href="admin_dashboard.php"><i class="fas fa-home"></i> Dashboard</a>
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_events.php'?'active':'' ?>" href="admin_events.php"><i class="fas fa-calendar-alt"></i> Events</a>
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_tourism.php'?'active':'' ?>" href="admin_tourism.php"><i class="fas fa-map-marked-alt"></i> Tourism</a>
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_government.php'?'active':'' ?>" href="admin_government.php"><i class="fas fa-landmark"></i> Government Officials</a>
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_barangay.php'?'active':'' ?>" href="admin_barangay.php"><i class="fas fa-building"></i> Barangays</a>
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_history.php'?'active':'' ?>" href="admin_history.php"><i class="fas fa-history"></i> History</a>
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_submissions.php'?'active':'' ?>" href="admin_submissions.php"><i class="fas fa-envelope"></i> Submissions
+                            <?php if(isset($unread_count) && $unread_count>0): ?><span class="badge bg-danger"><?= $unread_count ?></span><?php endif; ?>
+                        </a>
+                        <hr class="my-3" style="border-color: rgba(255,255,255,0.2)">
+                        <a class="nav-link" href="admin_logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </nav>
+                </div>
             </div>
-        </div>
-
 
             <!-- Main Content -->
             <div class="col-md-10 main-wrapper p-0">
@@ -216,6 +223,11 @@ mysqli_data_seek($events_result, 0); // Reset pointer
                     <?php if (isset($success)): ?>
                         <div class="alert alert-success alert-dismissible fade show">
                             <i class="fas fa-check-circle"></i> <?php echo $success; ?>
+                            <?php if (isset($show_edit_modal)): ?>
+                                <button type="button" class="btn btn-sm btn-light ms-3" onclick="document.getElementById('quickEditBtn<?= $show_edit_modal ?>').click()">
+                                    <i class="fas fa-edit"></i> Edit Now
+                                </button>
+                            <?php endif; ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     <?php endif; ?>
@@ -236,7 +248,7 @@ mysqli_data_seek($events_result, 0); // Reset pointer
                             <div class="row">
                                 <div class="col-md-4">
                                     <?php if ($main_image): ?>
-                                        <img src="<?php echo $main_image['image_path']; ?>" alt="Current Main Image" class="main-image-preview img-fluid">
+                                        <img src="<?php echo $main_image['image_path']; ?>" alt="Main History" class="main-image-preview img-fluid">
                                     <?php else: ?>
                                         <p class="text-muted">No main image set</p>
                                     <?php endif; ?>
@@ -246,9 +258,12 @@ mysqli_data_seek($events_result, 0); // Reset pointer
                                         <div class="mb-3">
                                             <label class="form-label"><i class="fas fa-upload"></i> New Main Image</label>
                                             <input type="file" name="main_image" class="form-control" accept="image/*" required>
-                                            <small class="text-muted">Recommended size: 450x300px</small>
+                                            <small class="text-muted">Recommended: 1920x600px</small>
                                         </div>
-                                        
+                                        <div class="mb-3">
+                                            <label class="form-label">Alt Text (Optional)</label>
+                                            <input type="text" name="alt_text" class="form-control" placeholder="Description" value="<?= htmlspecialchars($main_image['alt_text'] ?? '') ?>">
+                                        </div>
                                         <button type="submit" name="update_main_image" class="btn btn-primary">
                                             <i class="fas fa-save"></i> Update Main Image
                                         </button>
@@ -264,32 +279,37 @@ mysqli_data_seek($events_result, 0); // Reset pointer
                             <h5 class="mb-0"><i class="fas fa-plus-circle"></i> Add New History Event</h5>
                         </div>
                         <div class="card-body">
-                            <form method="POST" enctype="multipart/form-data">
+                            <form method="POST" enctype="multipart/form-data" id="addEventForm">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Year/Period *</label>
-                                        <input type="text" name="year" class="form-control" placeholder="e.g., 1591, 19th Century" required>
+                                        <input type="text" name="year" class="form-control" placeholder="e.g., 1591" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Title *</label>
-                                        <input type="text" name="title" class="form-control" placeholder="e.g., Founding of Kalilayan" required>
+                                        <input type="text" name="title" class="form-control" placeholder="Event title" required>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Description *</label>
-                                    <textarea name="description" class="form-control" rows="3" placeholder="Enter historical description..." required></textarea>
+                                    <textarea name="description" class="form-control" rows="3" required></textarea>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Timeline Position *</label>
-                                        <select name="position" class="form-control" required>
-                                            <option value="left">Left</option>
-                                            <option value="right">Right</option>
+                                        <select name="position" id="positionSelect" class="form-control" required>
+                                            <option value="">-- Select Position --</option>
+                                            <option value="left">Left Side</option>
+                                            <option value="right">Right Side</option>
                                         </select>
+                                        <div class="position-preview" id="positionPreview" style="display: none;">
+                                            <i class="fas fa-arrow-left"></i> <span id="previewText"></span>
+                                        </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Display Order *</label>
-                                        <input type="number" name="display_order" class="form-control" placeholder="1, 2, 3..." required>
+                                        <input type="number" name="display_order" class="form-control" min="1" placeholder="1, 2, 3..." required>
+                                        <small class="text-muted">Lower numbers appear first</small>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Image (Optional)</label>
@@ -313,12 +333,13 @@ mysqli_data_seek($events_result, 0); // Reset pointer
                                 <table class="table table-hover">
                                     <thead style="background-color: #f8f9fa;">
                                         <tr>
+                                            <th width="60">ID</th>
                                             <th width="80">Order</th>
-                                            <th width="120">Year</th>
+                                            <th width="100">Year</th>
                                             <th>Title</th>
                                             <th>Description</th>
                                             <th width="100">Position</th>
-                                            <th width="120">Image</th>
+                                            <th width="100">Image</th>
                                             <th width="150">Actions</th>
                                         </tr>
                                     </thead>
@@ -326,26 +347,27 @@ mysqli_data_seek($events_result, 0); // Reset pointer
                                         <?php if (mysqli_num_rows($events_result) > 0): ?>
                                             <?php while ($event = mysqli_fetch_assoc($events_result)): ?>
                                             <tr>
+                                                <td><?php echo $event['id']; ?></td>
                                                 <td><span class="badge bg-secondary"><?php echo $event['display_order']; ?></span></td>
                                                 <td><?php echo htmlspecialchars($event['year']); ?></td>
                                                 <td><strong><?php echo htmlspecialchars($event['title']); ?></strong></td>
-                                                <td><?php echo substr(htmlspecialchars($event['description']), 0, 80) . '...'; ?></td>
+                                                <td><?php echo substr(htmlspecialchars($event['description']), 0, 50) . '...'; ?></td>
                                                 <td>
                                                     <?php if ($event['position'] == 'left'): ?>
-                                                        <span class="badge bg-info">Left</span>
+                                                        <span class="badge bg-info"><i class="fas fa-arrow-left"></i> LEFT</span>
                                                     <?php else: ?>
-                                                        <span class="badge bg-primary">Right</span>
+                                                        <span class="badge bg-primary"><i class="fas fa-arrow-right"></i> RIGHT</span>
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
                                                     <?php if ($event['image_path']): ?>
                                                         <img src="<?php echo $event['image_path']; ?>" class="event-image">
                                                     <?php else: ?>
-                                                        <span class="text-muted"><i class="fas fa-image-slash"></i></span>
+                                                        <span class="text-muted">-</span>
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $event['id']; ?>">
+                                                    <button id="quickEditBtn<?= $event['id'] ?>" class="btn btn-sm btn-warning mb-1" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $event['id']; ?>">
                                                         <i class="fas fa-edit"></i> Edit
                                                     </button>
                                                     <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $event['id']; ?>">
@@ -355,52 +377,58 @@ mysqli_data_seek($events_result, 0); // Reset pointer
                                             </tr>
 
                                             <!-- Edit Modal -->
-                                            <div class="modal fade" id="editModal<?php echo $event['id']; ?>" tabindex="-1">
+                                            <div class="modal fade" id="editModal<?php echo $event['id']; ?>">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
-                                                        <div class="modal-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
-                                                            <h5 class="modal-title"><i class="fas fa-edit"></i> Edit Event</h5>
-                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                                        <div class="modal-header bg-warning">
+                                                            <h5 class="modal-title"><i class="fas fa-edit"></i> Edit Event #<?= $event['id'] ?></h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
                                                         <form method="POST" enctype="multipart/form-data">
                                                             <div class="modal-body">
                                                                 <input type="hidden" name="id" value="<?php echo $event['id']; ?>">
                                                                 <div class="row">
                                                                     <div class="col-md-6 mb-3">
-                                                                        <label class="form-label">Year/Period</label>
+                                                                        <label class="form-label">Year *</label>
                                                                         <input type="text" name="year" class="form-control" value="<?php echo htmlspecialchars($event['year']); ?>" required>
                                                                     </div>
                                                                     <div class="col-md-6 mb-3">
-                                                                        <label class="form-label">Title</label>
+                                                                        <label class="form-label">Title *</label>
                                                                         <input type="text" name="title" class="form-control" value="<?php echo htmlspecialchars($event['title']); ?>" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Description</label>
+                                                                    <label class="form-label">Description *</label>
                                                                     <textarea name="description" class="form-control" rows="4" required><?php echo htmlspecialchars($event['description']); ?></textarea>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-6 mb-3">
-                                                                        <label class="form-label">Position</label>
-                                                                        <select name="position" class="form-control" required>
-                                                                            <option value="left" <?php echo $event['position'] == 'left' ? 'selected' : ''; ?>>Left</option>
-                                                                            <option value="right" <?php echo $event['position'] == 'right' ? 'selected' : ''; ?>>Right</option>
+                                                                        <label class="form-label">Timeline Position *</label>
+                                                                        <select name="position" class="form-control position-edit-select" data-current="<?= $event['position'] ?>" required>
+                                                                            <option value="left" <?php echo $event['position'] == 'left' ? 'selected' : ''; ?>>
+                                                                                ← Left Side
+                                                                            </option>
+                                                                            <option value="right" <?php echo $event['position'] == 'right' ? 'selected' : ''; ?>>
+                                                                                Right Side →
+                                                                            </option>
                                                                         </select>
+                                                                        <small class="text-muted">Current: <strong><?= strtoupper($event['position']) ?></strong></small>
                                                                     </div>
                                                                     <div class="col-md-6 mb-3">
-                                                                        <label class="form-label">Display Order</label>
+                                                                        <label class="form-label">Display Order *</label>
                                                                         <input type="number" name="display_order" class="form-control" value="<?php echo $event['display_order']; ?>" required>
                                                                     </div>
                                                                 </div>
                                                                 <?php if ($event['image_path']): ?>
                                                                     <div class="mb-3">
-                                                                        <label class="form-label">Current Image</label><br>
-                                                                        <img src="<?php echo $event['image_path']; ?>" class="event-image mb-2">
+                                                                        <label>Current Image:</label><br>
+                                                                        <img src="<?php echo $event['image_path']; ?>" style="max-width: 200px; border-radius: 5px;">
                                                                     </div>
                                                                 <?php endif; ?>
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">New Image (optional - leave empty to keep current)</label>
+                                                                    <label class="form-label">Replace Image (optional)</label>
                                                                     <input type="file" name="image" class="form-control" accept="image/*">
+                                                                    <small class="text-muted">Leave empty to keep current image</small>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
@@ -408,7 +436,7 @@ mysqli_data_seek($events_result, 0); // Reset pointer
                                                                     <i class="fas fa-times"></i> Cancel
                                                                 </button>
                                                                 <button type="submit" name="update_event" class="btn btn-warning">
-                                                                    <i class="fas fa-save"></i> Update Event
+                                                                    <i class="fas fa-save"></i> Save Changes
                                                                 </button>
                                                             </div>
                                                         </form>
@@ -417,29 +445,27 @@ mysqli_data_seek($events_result, 0); // Reset pointer
                                             </div>
 
                                             <!-- Delete Modal -->
-                                            <div class="modal fade" id="deleteModal<?php echo $event['id']; ?>" tabindex="-1">
+                                            <div class="modal fade" id="deleteModal<?php echo $event['id']; ?>">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header bg-danger text-white">
-                                                            <h5 class="modal-title"><i class="fas fa-exclamation-triangle"></i> Confirm Delete</h5>
+                                                            <h5 class="modal-title"><i class="fas fa-trash"></i> Confirm Delete</h5>
                                                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <p>Are you sure you want to delete this event?</p>
                                                             <div class="alert alert-warning">
-                                                                <strong>Year:</strong> <?php echo htmlspecialchars($event['year']); ?><br>
+                                                                <strong>Year:</strong> <?php echo $event['year']; ?><br>
                                                                 <strong>Title:</strong> <?php echo htmlspecialchars($event['title']); ?>
                                                             </div>
-                                                            <p class="text-danger"><small><i class="fas fa-info-circle"></i> This action cannot be undone!</small></p>
+                                                            <p class="text-danger"><small><i class="fas fa-exclamation-triangle"></i> This cannot be undone!</small></p>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <form method="POST">
                                                                 <input type="hidden" name="id" value="<?php echo $event['id']; ?>">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                                    <i class="fas fa-times"></i> Cancel
-                                                                </button>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                                 <button type="submit" name="delete_event" class="btn btn-danger">
-                                                                    <i class="fas fa-trash"></i> Delete
+                                                                    <i class="fas fa-trash"></i> Yes, Delete
                                                                 </button>
                                                             </form>
                                                         </div>
@@ -449,9 +475,9 @@ mysqli_data_seek($events_result, 0); // Reset pointer
                                             <?php endwhile; ?>
                                         <?php else: ?>
                                             <tr>
-                                                <td colspan="7" class="text-center text-muted py-4">
-                                                    <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
-                                                    No history events yet. Add your first event above!
+                                                <td colspan="8" class="text-center py-4">
+                                                    <i class="fas fa-inbox fa-3x text-muted mb-2 d-block"></i>
+                                                    <p class="text-muted">No events yet. Add your first event above!</p>
                                                 </td>
                                             </tr>
                                         <?php endif; ?>
@@ -467,14 +493,39 @@ mysqli_data_seek($events_result, 0); // Reset pointer
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Auto dismiss alerts after 5 seconds
-        setTimeout(function() {
-            var alerts = document.querySelectorAll('.alert');
-            alerts.forEach(function(alert) {
-                var bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
+        // Position dropdown preview
+        document.getElementById('positionSelect').addEventListener('change', function() {
+            const preview = document.getElementById('positionPreview');
+            const previewText = document.getElementById('previewText');
+            const icon = preview.querySelector('i');
+            
+            if (this.value) {
+                preview.style.display = 'inline-block';
+                if (this.value === 'left') {
+                    previewText.textContent = 'Will appear on LEFT side';
+                    icon.className = 'fas fa-arrow-left';
+                    preview.style.color = '#0dcaf0';
+                } else {
+                    previewText.textContent = 'Will appear on RIGHT side';
+                    icon.className = 'fas fa-arrow-right';
+                    preview.style.color = '#0d6efd';
+                }
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+
+        // Auto-dismiss alerts
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                new bootstrap.Alert(alert).close();
             });
         }, 5000);
-    </script>
-</body>
-</html>
+
+        // Auto-show edit modal after adding (optional)
+        <?php if (isset($show_edit_modal)): ?>
+        // Uncomment below to auto-open edit modal after adding
+        // setTimeout(() => {
+        //     document.getElementById('quickEditBtn<?= $show_edit_modal ?>').click();
+        // }, 1000);
+        <?php endif; ?>

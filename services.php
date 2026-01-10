@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <!-- Submit a Request Form -->
             <div class="form-card">
-                <h3 class="text-center mb-3 fw-bold text-danger">📝 Submit a Request</h3>
+                <h3 class="text-center mb-3 fw-bold text-danger">Submit a Request</h3>
                 <form id="requestForm" action="" method="POST">
                     <div class="form-group">
                         <label for="citizenName" class="form-label">Citizen Name</label>

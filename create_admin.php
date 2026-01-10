@@ -1,5 +1,5 @@
 <?php
-include "includes/db_connect.php"; // siguraduhing tama ang path
+include "includes/db_connect.php"; 
 
 $password = password_hash("admin123", PASSWORD_DEFAULT);
 

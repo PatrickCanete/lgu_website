@@ -14,7 +14,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-echo "<h1>🌴 Installing Tourism Attractions Module</h1>";
+echo "<h1>Installing Tourism Attractions Module</h1>";
 echo "<hr>";
 
 // Create tourism_attractions table

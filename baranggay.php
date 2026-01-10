@@ -294,7 +294,7 @@ $total_barangays = $rural_count + $urban_count;
         <div class="container">
             <!-- Hero Section -->
             <div class="hero-section">
-                <h1>🏘️ Barangays of Unisan</h1>
+                <h1>Barangays of Unisan</h1>
                 <p>Discover the vibrant communities that make up our municipality</p>
             </div>
 

@@ -41,7 +41,7 @@ body { font-family: 'Poppins', sans-serif; background: #f4f6f9; }
         <!-- Sidebar -->
         <div class="col-md-2 sidebar p-0">
             <div class="p-4">
-                <h4 class="mb-4">🏛️ Unisan Admin</h4>
+                <h4 class="mb-4">Unisan Admin</h4>
                 <nav class="nav flex-column">
                     <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_dashboard.php'?'active':'' ?>" href="admin_dashboard.php"><i class="fas fa-home"></i> Dashboard</a>
                     <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_events.php'?'active':'' ?>" href="admin_events.php"><i class="fas fa-calendar-alt"></i> Events</a>

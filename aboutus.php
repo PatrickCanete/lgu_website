@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg" style="background: linear-gradient(135deg, #d64545 0%, #b83232 100%);">
         <div class="container-fluid">
             <a class="navbar-brand text-white fw-bold" href="#">
-                <img src=".vscode/images/unisan seal.jpg" alt="Unisan Seal" width="50" height="50">
+                <img src="images/unisan seal.jpg" alt="Unisan Seal" width="50" height="50">
                 UNISAN QUEZON
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

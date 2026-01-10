@@ -243,7 +243,7 @@ $events_result = $conn->query($events_query);
             margin: 0;
         }
 
-        /* Map Container Styling - REMOVED */
+       
 
         /* Responsive Design */
         @media (max-width: 768px) {

@@ -20,7 +20,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Optional: set MySQL session timezone
+
 $conn->query("SET time_zone = '+08:00'");
 
 // Set charset to utf8

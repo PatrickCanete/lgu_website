@@ -132,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div>
         <div class="login-container">
             <div class="login-header">
-                <h2>🏛️ Admin Portal</h2>
+                <h2>Admin Portal</h2>
                 <p>Municipality of Unisan, Quezon</p>
             </div>
 
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
            
             <?php if (!empty($debug_info)): ?>
                 <div class="debug-info">
-                    <h6>🐛 Debug Information:</h6>
+                    <h6> Debug Information:</h6>
                     <ul>
                         <?php foreach ($debug_info as $info): ?>
                             <li><?php echo htmlspecialchars($info); ?></li>
@@ -167,9 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             <?php endif; ?>
 
-            <div class="text-center mt-3">
-                <a href="debug_login.php" class="btn btn-sm btn-outline-secondary">🔍 Run Full Diagnostic</a>
-            </div>
+            
         </div>
 
         <div class="back-link">

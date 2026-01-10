@@ -31,9 +31,9 @@ $sql1 = "CREATE TABLE IF NOT EXISTS admin_users (
 )";
 
 if ($conn->query($sql1)) {
-    $messages[] = "✅ Table 'admin_users' created successfully";
+    $messages[] = "Table 'admin_users' created successfully";
 } else {
-    $messages[] = "❌ Error creating admin_users: " . $conn->error;
+    $messages[] = " Error creating admin_users: " . $conn->error;
     $success = false;
 }
 
@@ -48,9 +48,9 @@ $sql2 = "CREATE TABLE IF NOT EXISTS events (
 )";
 
 if ($conn->query($sql2)) {
-    $messages[] = "✅ Table 'events' created successfully";
+    $messages[] = "Table 'events' created successfully";
 } else {
-    $messages[] = "❌ Error creating events: " . $conn->error;
+    $messages[] = " Error creating events: " . $conn->error;
     $success = false;
 }
 
@@ -65,9 +65,9 @@ $sql3 = "CREATE TABLE IF NOT EXISTS form_submissions (
 )";
 
 if ($conn->query($sql3)) {
-    $messages[] = "✅ Table 'form_submissions' created successfully";
+    $messages[] = "Table 'form_submissions' created successfully";
 } else {
-    $messages[] = "❌ Error creating form_submissions: " . $conn->error;
+    $messages[] = "Error creating form_submissions: " . $conn->error;
     $success = false;
 }
 
@@ -81,15 +81,15 @@ if ($check_admin->num_rows == 0) {
              VALUES ('admin', '$password_hash', 'admin@unisan.gov.ph')";
     
     if ($conn->query($sql4)) {
-        $messages[] = "✅ Admin user created successfully";
+        $messages[] = " Admin user created successfully";
         $messages[] = "   Username: <strong>admin</strong>";
         $messages[] = "   Password: <strong>admin123</strong>";
     } else {
-        $messages[] = "❌ Error creating admin user: " . $conn->error;
+        $messages[] = " Error creating admin user: " . $conn->error;
         $success = false;
     }
 } else {
-    $messages[] = "ℹ️ Admin user already exists";
+    $messages[] = "ℹ Admin user already exists";
 }
 
 // Check if events exist
@@ -105,12 +105,12 @@ if ($event_count == 0) {
     ('2025-09-05', 'Cultural Heritage Day', 'Experience the rich history of Unisan through exhibits, workshops, and traditional performances.')";
     
     if ($conn->query($sql5)) {
-        $messages[] = "✅ Sample events added successfully";
+        $messages[] = "Sample events added successfully";
     } else {
-        $messages[] = "❌ Error adding sample events: " . $conn->error;
+        $messages[] = "Error adding sample events: " . $conn->error;
     }
 } else {
-    $messages[] = "ℹ️ Events already exist ($event_count events)";
+    $messages[] = "ℹ Events already exist ($event_count events)";
 }
 
 // Display results
@@ -122,7 +122,7 @@ echo "</div>";
 
 if ($success) {
     echo "<div style='background:#d4edda; border:1px solid #c3e6cb; color:#155724; padding:20px; border-radius:10px; margin:20px 0;'>";
-    echo "<h2>🎉 Installation Complete!</h2>";
+    echo "<h2>Installation Complete!</h2>";
     echo "<p><strong>You can now login to the admin panel:</strong></p>";
     echo "<p>Username: <code style='background:#fff; padding:5px 10px; border-radius:3px;'>admin</code></p>";
     echo "<p>Password: <code style='background:#fff; padding:5px 10px; border-radius:3px;'>admin123</code></p>";
@@ -131,7 +131,7 @@ if ($success) {
     echo "</div>";
     
     // Show database info
-    echo "<h3>📊 Database Summary:</h3>";
+    echo "<h3>Database Summary:</h3>";
     echo "<table style='border-collapse:collapse; width:100%; max-width:600px;'>";
     echo "<tr style='background:#667eea; color:white;'>";
     echo "<th style='padding:10px; text-align:left; border:1px solid #ddd;'>Table</th>";
@@ -150,7 +150,7 @@ if ($success) {
     echo "</table>";
 } else {
     echo "<div style='background:#f8d7da; border:1px solid #f5c6cb; color:#721c24; padding:20px; border-radius:10px; margin:20px 0;'>";
-    echo "<h2>⚠️ Installation had some errors</h2>";
+    echo "<h2>Installation had some errors</h2>";
     echo "<p>Please check the messages above and try again.</p>";
     echo "</div>";
 }

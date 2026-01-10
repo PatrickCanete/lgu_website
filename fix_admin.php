@@ -35,11 +35,11 @@ if ($check->num_rows > 0) {
     // Test current password
     echo "<h3>Testing Current Password:</h3>";
     if (password_verify('admin123', $admin['password'])) {
-        echo "<p style='color:green;'>✅ Password 'admin123' already works!</p>";
+        echo "<p style='color:green;'> Password 'admin123' already works!</p>";
         echo "<p style='color:green;'><strong>You can login now!</strong></p>";
         echo "<a href='admin_login.php' style='background:#28a745; color:white; padding:10px 20px; text-decoration:none; border-radius:5px; display:inline-block; margin-top:10px;'>Go to Login Page</a>";
     } else {
-        echo "<p style='color:red;'>❌ Current password doesn't work</p>";
+        echo "<p style='color:red;'>Current password doesn't work</p>";
         echo "<p style='color:orange;'>Updating password now...</p>";
         
         // Generate new hash
@@ -49,14 +49,14 @@ if ($check->num_rows > 0) {
         $update = $conn->query("UPDATE admin_users SET password = '$new_hash' WHERE username = 'admin'");
         
         if ($update) {
-            echo "<p style='color:green;'>✅ Password updated successfully!</p>";
+            echo "<p style='color:green;'> Password updated successfully!</p>";
             
             // Verify the new password works
             $verify_check = $conn->query("SELECT password FROM admin_users WHERE username = 'admin'");
             $new_admin = $verify_check->fetch_assoc();
             
             if (password_verify('admin123', $new_admin['password'])) {
-                echo "<p style='color:green;'>✅ Verified: New password works!</p>";
+                echo "<p style='color:green;'> Verified: New password works!</p>";
                 echo "<hr>";
                 echo "<div style='background:#d4edda; padding:20px; border-radius:10px; margin:20px 0;'>";
                 echo "<h2>🎉 Success!</h2>";
@@ -66,14 +66,14 @@ if ($check->num_rows > 0) {
                 echo "<a href='admin_login.php' style='background:#667eea; color:white; padding:10px 20px; text-decoration:none; border-radius:5px; display:inline-block; margin-top:10px;'>Go to Login Page →</a>";
                 echo "</div>";
             } else {
-                echo "<p style='color:red;'>❌ Verification failed. Something went wrong.</p>";
+                echo "<p style='color:red;'> Verification failed. Something went wrong.</p>";
             }
         } else {
-            echo "<p style='color:red;'>❌ Update failed: " . $conn->error . "</p>";
+            echo "<p style='color:red;'>Update failed: " . $conn->error . "</p>";
         }
     }
 } else {
-    echo "<p style='color:red;'>❌ No admin user found!</p>";
+    echo "<p style='color:red;'> No admin user found!</p>";
     echo "<p>Creating new admin user...</p>";
     
     // Create new admin
@@ -81,12 +81,12 @@ if ($check->num_rows > 0) {
     $insert = $conn->query("INSERT INTO admin_users (username, password, email) VALUES ('admin', '$new_hash', 'admin@unisan.gov.ph')");
     
     if ($insert) {
-        echo "<p style='color:green;'>✅ Admin user created!</p>";
+        echo "<p style='color:green;'> Admin user created!</p>";
         echo "<p>Username: <code>admin</code></p>";
         echo "<p>Password: <code>admin123</code></p>";
         echo "<a href='admin_login.php' style='background:#667eea; color:white; padding:10px 20px; text-decoration:none; border-radius:5px; display:inline-block; margin-top:10px;'>Go to Login Page →</a>";
     } else {
-        echo "<p style='color:red;'>❌ Failed to create admin: " . $conn->error . "</p>";
+        echo "<p style='color:red;'> Failed to create admin: " . $conn->error . "</p>";
     }
 }
 

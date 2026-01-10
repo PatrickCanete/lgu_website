@@ -1,7 +1,7 @@
 <?php if(!isset($unread_count)) $unread_count = 0; ?>
 <div class="col-md-2 sidebar p-0">
     <div class="p-4">
-        <h4 class="mb-4">🏛️ Unisan Admin</h4>
+        <h4 class="mb-4">Unisan Admin</h4>
         <nav class="nav flex-column">
             <a class="nav-link <?= basename($_SERVER['PHP_SELF'])=='admin_dashboard.php'?'active':'' ?>" href="admin_dashboard.php">
                 <i class="fas fa-home"></i> Dashboard

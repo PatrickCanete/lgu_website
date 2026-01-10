@@ -31,7 +31,7 @@ $sql = "CREATE TABLE IF NOT EXISTS tourism_attractions (
 )";
 
 if ($conn->query($sql)) {
-    echo "<p style='color:green;'>✅ Table <b>tourism_attractions</b> created successfully!</p>";
+    echo "<p style='color:green;'> Table <b>tourism_attractions</b> created successfully!</p>";
 
     // Check existing data
     $check = $conn->query("SELECT COUNT(*) as total FROM tourism_attractions");
@@ -61,22 +61,22 @@ if ($conn->query($sql)) {
         ('UNISAN SANDS','Brgy. Maputat, Unisan, Quezon','White sand beach resort perfect for swimming and events.','Beach & Resort','images/unisansands.jpg',0)";
 
         if ($conn->query($insert)) {
-            echo "<p style='color:green;'>✅ All restaurants and resorts inserted successfully!</p>";
+            echo "<p style='color:green;'> All restaurants and resorts inserted successfully!</p>";
         } else {
-            echo "<p style='color:red;'>❌ Error inserting sample data: ".$conn->error."</p>";
+            echo "<p style='color:red;'>Error inserting sample data: ".$conn->error."</p>";
         }
 
     } else {
-        echo "<p style='color:orange;'>ℹ️ Tourism data already exists ($total records found)</p>";
+        echo "<p style='color:orange;'>ℹ Tourism data already exists ($total records found)</p>";
     }
 
     // Create upload directory
     $upload_dir = "uploads/tourism/";
     if (!file_exists($upload_dir)) {
         mkdir($upload_dir, 0777, true);
-        echo "<p style='color:green;'>✅ Upload folder created: <b>$upload_dir</b></p>";
+        echo "<p style='color:green;'> Upload folder created: <b>$upload_dir</b></p>";
     } else {
-        echo "<p style='color:orange;'>ℹ️ Upload folder already exists</p>";
+        echo "<p style='color:orange;'>ℹ Upload folder already exists</p>";
     }
 
     echo "<hr>";
@@ -88,7 +88,7 @@ if ($conn->query($sql)) {
     echo "</div>";
 
 } else {
-    echo "<p style='color:red;'>❌ Error creating table: " . $conn->error . "</p>";
+    echo "<p style='color:red;'> Error creating table: " . $conn->error . "</p>";
 }
 
 $conn->close();
